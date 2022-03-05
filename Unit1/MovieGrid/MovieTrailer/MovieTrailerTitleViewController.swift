@@ -29,7 +29,6 @@ class MovieTrailerTitleViewController: UIViewController, UITableViewDataSource, 
                     print(error.localizedDescription)
              } else if let data = data {
                  let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
-                 print(dataDictionary)
                  
                  self.trailer = dataDictionary["results"] as! [[String:Any]]
                  
