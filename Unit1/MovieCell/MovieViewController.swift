@@ -28,7 +28,7 @@ class MovieViewController: UIViewController, UITableViewDataSource, UITableViewD
                     print(error.localizedDescription)
              } else if let data = data {
                     let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
-                    
+                 
                  self.movies = dataDictionary["results"] as! [[String:Any]]
                  
                  self.tableView.reloadData()

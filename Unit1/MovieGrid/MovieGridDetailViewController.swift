@@ -6,9 +6,9 @@
 //
 
 import UIKit
+import Alamofire
 
-class MovieGridDetailViewController: UIViewController {
-
+class MovieGridDetailViewController: UIViewController, UIGestureRecognizerDelegate {
     
     @IBOutlet weak var backdropView: UIImageView!
     @IBOutlet weak var posterView: UIImageView!
@@ -31,9 +31,28 @@ class MovieGridDetailViewController: UIViewController {
         synopsisLabel.text = movie["overview"] as? String
         posterView.af_setImage(withURL: posterUrl!)
         backdropView.af_setImage(withURL: backdropUrl!)
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(posterTap(_:)))
+        
+         // Optionally set the number of required taps, e.g., 2 for a double click
+         tapGestureRecognizer.numberOfTapsRequired = 1
+
+         // Attach it to a view of your choice. If it's a UIImageView, remember to enable user interaction
+         posterView.isUserInteractionEnabled = true
+         posterView.addGestureRecognizer(tapGestureRecognizer)
     }
     
-
+    @IBAction func posterTap(_ sender: UITapGestureRecognizer) {
+//        let location = sender.location(in: view)
+        
+        performSegue(withIdentifier: "trailerTitleSegue", sender: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let trailerTitleViewController = segue.destination as! MovieTrailerTitleViewController
+        trailerTitleViewController.movieID = movie["id"] as? Int
+        
+    }
     /*
     // MARK: - Navigation
 
